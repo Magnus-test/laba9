@@ -2,7 +2,7 @@
 <p>Find me in app/views/palindrome/view.html.erb</p>
 
 <p id="count">
-    <% if @result.nil? %>
+    <% if @result.empty? %>
         <%= 'Error input' %>
     <% else %>
         <%= "Count: #{@count}"%>
@@ -27,6 +27,5 @@
     </tr>
     <% end %>
 </table>
-
 
 <p> <%= link_to "Repeat input", :palindrome_input %> </p>

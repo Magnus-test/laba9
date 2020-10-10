@@ -3,7 +3,7 @@ class PalindromeController < ApplicationController
   end
 
   def view
-    unless params[:val].to_i.positive?
+    unless is_numeric? params[:val]
       @count = 0
       @result = []
       return nil
@@ -24,4 +24,8 @@ class PalindromeController < ApplicationController
   def palindrome? num
     num == num.to_s.reverse.to_i
   end
+
+  def is_numeric? obj 
+    obj.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
+ end
 end
