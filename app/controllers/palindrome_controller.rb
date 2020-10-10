@@ -3,10 +3,9 @@ class PalindromeController < ApplicationController
   end
 
   def view
-    unless is_numeric? params[:val]
-      @count = 0
+    unless is_numeric? params[:val] and params[:val].to_i.positive?
       @result = []
-      return nil
+      return @count = 0
     end
     val = params[:val].to_i
     count = 1
