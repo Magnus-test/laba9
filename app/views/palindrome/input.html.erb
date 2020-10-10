@@ -1,0 +1,9 @@
+<h1>Palindrome#input</h1>
+<p>Enter value (>0)</p>
+<%= form_tag("/palindrome/view", :method => "get") do %>
+    <%= label_tag("Value:") %>
+    <%= text_field_tag(:val)%> <br/>
+
+    <br/>
+    <%= submit_tag("Find squared palindromes") %>
+<% end %>
