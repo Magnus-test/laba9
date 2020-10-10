@@ -16,8 +16,8 @@ class PalindromeController < ApplicationController
         res.push [count += 1, num, num**2]
       end
     end
-    @count = count
     @result = res
+    @count = count
   end
 
   private 
