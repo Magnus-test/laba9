@@ -2,7 +2,6 @@
 <html>
 <head>
     <link rel="stylesheet" media="all" href="/assets/application.debug-33be70939d1c3a17645610506d1d7ac8d67957ac3f4e173af54da87eae7a62d1.css" data-turbolinks-track="reload">
-    <!-- <script src="/packs/js/application-9afcbb5693aa87623e69.js" data-turbolinks-track="reload"></script> -->
     <title>Laba9App</title>
     <meta charset="UTF-8" />
     <meta name="csrf-param" content="authenticity_token">
@@ -10,16 +9,15 @@
     <script>
         palindrome_url =  location.protocol + "//" + location.host + "/palindrome/view.json"
         function send_query(){
-            var frm = document.forms.palindrome_form;
-            
-            var num = frm.val.value
-            var param_str = "?val="+String(num)+"&commit=find";
-            if (param_str == "") return false; 
-            var my_JSON_object = {};
-            var http_request = new XMLHttpRequest();
-            http_request.open("GET", palindrome_url+param_str, true);
-            http_request.onreadystatechange = function () {
-                var done = 4, ok = 200;
+            const frm = document.forms.palindrome_form;
+            const val = frm.val.value
+            const address_link = `?val=${val}&commit=find`;
+            if (address_link == "") return false; 
+            let my_JSON_object = {};
+            const http_request = new XMLHttpRequest();
+            http_request.open("GET", palindrome_url + address_link, true);
+            http_request.onreadystatechange = () => {
+                const done = 4, ok = 200;
                 if (http_request.readyState == done &&
                     http_request.status == ok) {
                     my_JSON_object =
@@ -29,10 +27,15 @@
             };
             http_request.send(null);
             return false; 
-            function show_result(data){
-                var result = document.getElementById("result");
-                result.innerHTML = "<hr/>Result is: " + data.value +
-                "<hr/><p>"+Date()+"</p>";
+            function show_result(data) {
+                const table = document.querySelector("#result");
+                table.innerHTML = "<thead><tr><th>Count</th><th>Number</th><th>Squared Number</th></tr></thead><tbody></tbody>"
+                const res_output = document.querySelector("#result tbody");
+                for (let elem of data.value) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>${elem[0]}</td><td>${elem[1]}</td><td>${elem[2]}</td>`;
+                    res_output.append(row);
+                }
             } 
         } 
     </script>
@@ -40,14 +43,14 @@
 <body>
     <h1>Palindrome#input</h1>
     <p>Enter value (&gt;0)</p>
-    <!-- action="/palindrome/view" -->
     <form  name="palindrome_form" accept-charset="UTF-8" method="get">
         <label for="Value:">Value:</label>
         <input type="text" name="val" id="val"> 
         <br> <br>
-        <input type="submit" name="commit" value="find" data-disable-with="find"  onclick="return send_query();">
+        <input type="submit" name="commit" value="find" data-disable-with="find" onclick="return send_query();">
     </form>
-
-    <div id="result"></div>
+    <br>
+  
+    <table id="result" border="1"></table>
 </body>
 </html>
