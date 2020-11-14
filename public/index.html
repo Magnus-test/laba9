@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" media="all" href="/assets/application.debug-33be70939d1c3a17645610506d1d7ac8d67957ac3f4e173af54da87eae7a62d1.css" data-turbolinks-track="reload">
+    <!-- <script src="/packs/js/application-9afcbb5693aa87623e69.js" data-turbolinks-track="reload"></script> -->
+    <title>Laba9App</title>
+    <meta charset="UTF-8" />
+    <meta name="csrf-param" content="authenticity_token">
+    <meta name="csrf-token" content="M+hxpc4dsEyLoHnHD2sSbayX3E9I24yy3KwglAwIQ5BmeVeMdfymrZ3d9JI5q5k0tODxyDWgxA8bMGtAP3i45w==">
+    <script>
+        palindrome_url =  location.protocol + "//" + location.host + "/palindrome/view.json"
+        function send_query(){
+            var frm = document.forms.palindrome_form;
+            
+            var num = frm.val.value
+            var param_str = "?val="+String(num)+"&commit=find";
+            if (param_str == "") return false; 
+            var my_JSON_object = {};
+            var http_request = new XMLHttpRequest();
+            http_request.open("GET", palindrome_url+param_str, true);
+            http_request.onreadystatechange = function () {
+                var done = 4, ok = 200;
+                if (http_request.readyState == done &&
+                    http_request.status == ok) {
+                    my_JSON_object =
+                    JSON.parse(http_request.responseText);
+                    show_result(my_JSON_object);
+                }
+            };
+            http_request.send(null);
+            return false; 
+            function show_result(data){
+                var result = document.getElementById("result");
+                result.innerHTML = "<hr/>Result is: " + data.value +
+                "<hr/><p>"+Date()+"</p>";
+            } 
+        } 
+    </script>
+</head>
+<body>
+    <h1>Palindrome#input</h1>
+    <p>Enter value (&gt;0)</p>
+    <!-- action="/palindrome/view" -->
+    <form  name="palindrome_form" accept-charset="UTF-8" method="get">
+        <label for="Value:">Value:</label>
+        <input type="text" name="val" id="val"> 
+        <br> <br>
+        <input type="submit" name="commit" value="find" data-disable-with="find"  onclick="return send_query();">
+    </form>
+
+    <div id="result"></div>
+</body>
+</html>

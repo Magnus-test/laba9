@@ -1,5 +1,8 @@
 class PalindromeController < ApplicationController
+  # respond_to :html, :json, :xml
+
   def input
+    render layout: false
   end
 
   def view
@@ -15,8 +18,18 @@ class PalindromeController < ApplicationController
         res.push [count += 1, num, num**2]
       end
     end
+
     @result = res
     @count = count
+    respond_to do |format|
+      format.html 
+      format.json do
+        render json:
+          {type: @result.class.to_s, value: @result}
+          {type: @count.class.to_s, value: @count}
+      end
+    end
+
   end
 
   private 
