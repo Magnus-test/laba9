@@ -31,10 +31,17 @@
                 const table = document.querySelector("#result");
                 table.innerHTML = "<thead><tr><th>Count</th><th>Number</th><th>Squared Number</th></tr></thead><tbody></tbody>"
                 const res_output = document.querySelector("#result tbody");
-                for (let elem of data.value) {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `<td>${elem[0]}</td><td>${elem[1]}</td><td>${elem[2]}</td>`;
-                    res_output.append(row);
+                if (!Array.isArray(data.value)) {
+                    const err = document.createElement("tr");
+                    err.innerHTML = `<td colspan="3">${data.value}</td>`;
+                    res_output.append(err);
+                }
+                else {
+                    for (let elem of data.value) {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `<td>${elem[0]}</td><td>${elem[1]}</td><td>${elem[2]}</td>`;
+                        res_output.append(row);
+                    }
                 }
             } 
         } 
